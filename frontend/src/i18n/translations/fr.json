@@ -1,0 +1,202 @@
+{
+  "common": {
+    "appName": "VibeFinder",
+    "guestMode": "Mode Invité",
+    "createAccount": "Créer un compte",
+    "register": "S'inscrire",
+    "signIn": "Se connecter",
+    "logOut": "Déconnexion",
+    "close": "Fermer",
+    "or": "ou",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "next": "Suivant",
+    "remove": "Supprimer",
+    "backToHome": "Retour à l'accueil"
+  },
+  "home": {
+    "title": "Découvrez la Musique avec l'IA",
+    "subtitle": "Identifiez des chansons ou décrivez votre humeur et notre IA vous recommandera la musique parfaite.",
+    "describeYourMood": "Décrivez votre humeur",
+    "identifySong": "Identifier une chanson",
+    "errorGenerating": "Erreur lors de la génération des recommandations. Veuillez réessayer.",
+    "errorLoadingMore": "Erreur lors du chargement de plus de recommandations.",
+    "errorLoadingHistory": "Erreur lors du chargement de l'historique.",
+    "loadingHistory": "Chargement de votre recherche précédente...",
+    "restoredFromHistory": "Restauré depuis l'historique",
+    "newSearch": "Nouvelle recherche",
+    "songIdentified": "Chanson identifiée",
+    "features": {
+      "audioId": {
+        "title": "Identification Audio",
+        "description": "Enregistrez n'importe quelle chanson et nous l'identifierons instantanément"
+      },
+      "moodBased": {
+        "title": "Recommandations par Humeur",
+        "description": "Décrivez comment vous vous sentez et notre IA trouvera la musique parfaite"
+      },
+      "learns": {
+        "title": "Apprend de Vous",
+        "description": "Inscrivez-vous et le système apprendra vos goûts pour de meilleures suggestions"
+      }
+    }
+  },
+  "audioRecorder": {
+    "title": "Identifier une Chanson",
+    "subtitle": "Enregistrez un extrait de la chanson que vous écoutez",
+    "identifyingSong": "Identification en cours...",
+    "recording": "Enregistrement...",
+    "tapToStop": "Appuyez pour arrêter (minimum 5 secondes)",
+    "tapToStart": "Appuyez sur le bouton pour commencer",
+    "couldNotIdentify": "Impossible d'identifier la chanson. Essayez avec un extrait plus long ou plus clair.",
+    "errorProcessing": "Erreur lors du traitement audio. Veuillez réessayer.",
+    "microphoneError": "Impossible d'accéder au microphone. Veuillez autoriser l'accès et réessayer.",
+    "tips": {
+      "title": "Conseils",
+      "tip1": "Rapprochez votre appareil de la source sonore",
+      "tip2": "Enregistrez au moins 10 secondes pour de meilleurs résultats",
+      "tip3": "Évitez le bruit de fond excessif"
+    }
+  },
+  "moodSelector": {
+    "title": "Décrivez votre Humeur",
+    "subtitle": "Dites-nous comment vous vous sentez et nous vous recommanderons la musique parfaite",
+    "quickMoods": "Humeurs rapides",
+    "orDescribe": "ou décrivez votre propre humeur",
+    "andDescribeMood": "et décrivez votre humeur pour de meilleurs résultats",
+    "placeholder": "Ex: Musique indie alternative avec des vibes d'été...",
+    "placeholderWithSong": "Décrivez votre humeur pour de meilleurs résultats...",
+    "examples": {
+      "title": "Exemples de descriptions:",
+      "ex1": "Rock alternatif des années 90 avec des guitares distordues",
+      "ex2": "Jazz doux pour un dîner romantique",
+      "ex3": "Musique électronique pour conduire la nuit"
+    },
+    "moods": {
+      "energetic": "Énergique",
+      "relaxed": "Détendu",
+      "melancholic": "Mélancolique",
+      "party": "Fête",
+      "focus": "Concentration",
+      "romantic": "Romantique",
+      "motivational": "Motivant",
+      "nostalgic": "Nostalgique"
+    },
+    "audio": {
+      "title": "Chanson de référence",
+      "optional": "optionnel",
+      "identified": "Chanson identifiée!",
+      "identifying": "Identification en cours...",
+      "dropzone": "Cliquez ou déposez un fichier audio ici",
+      "formats": "MP3, WAV, M4A, OGG (max 10Mo)",
+      "invalidFormat": "Format invalide. Veuillez télécharger un fichier audio.",
+      "fileTooLarge": "Fichier trop volumineux. La taille maximale est de 10Mo.",
+      "couldNotIdentify": "Impossible d'identifier la chanson. Essayez avec un autre fichier audio.",
+      "errorProcessing": "Erreur lors du traitement. Veuillez réessayer.",
+      "submitWithSongOnly": "Appuyez sur envoyer pour obtenir des recommandations basées sur cette chanson",
+      "attachAudio": "Joindre un fichier audio",
+      "attachHint": "Utilisez le microphone pour dicter ou identifier une chanson",
+      "addMoodForBetter": "Décrivez votre humeur pour des recommandations plus personnalisées"
+    },
+    "recording": {
+      "start": "Démarrer l'enregistrement",
+      "stop": "Arrêter l'enregistrement",
+      "listening": "Écoute en cours...",
+      "identifyingSong": "Identification de la chanson...",
+      "voiceInput": "Entrée vocale",
+      "voiceInputDesc": "Dictez votre description d'humeur",
+      "identifySong": "Identifier une chanson",
+      "identifySongDesc": "Enregistrer la musique à proximité",
+      "speakNow": "Parlez maintenant... vos mots apparaîtront dans le champ de texte",
+      "playMusic": "Jouez la chanson près du microphone...",
+      "speechNotSupported": "L'entrée vocale n'est pas supportée dans ce navigateur",
+      "microphoneError": "Impossible d'accéder au microphone. Veuillez autoriser l'accès et réessayer."
+    }
+  },
+  "recommendations": {
+    "title": "Recommandations pour vous",
+    "songsBasedOn": "{count} chansons basées sur {type}",
+    "basedOnMood": "votre humeur",
+    "basedOnSong": "la chanson identifiée",
+    "basedOnCombined": "votre humeur et la chanson de référence",
+    "newSearch": "Nouvelle recherche",
+    "loadMore": "Charger 10 de plus",
+    "loadingMore": "Chargement...",
+    "generating": "Génération des recommandations...",
+    "generatingSubtitle": "Notre IA analyse {type} pour trouver les meilleures recommandations",
+    "likeBanner": "Vous aimez les recommandations?",
+    "createAccountBanner": "Créez un compte pour que le système apprenne vos goûts et vous donne de meilleures suggestions."
+  },
+  "songCard": {
+    "playOnYouTube": "Écouter sur YouTube Music",
+    "like": "J'aime",
+    "dislike": "Je n'aime pas",
+    "addToPlaylist": "Ajouter à la playlist",
+    "registerToSave": "Inscrivez-vous pour sauvegarder vos préférences",
+    "preview": "Aperçu",
+    "closePreview": "Fermer l'aperçu",
+    "loadingPreview": "Chargement du lecteur...",
+    "nowPlaying": "En lecture",
+    "openInYouTube": "Ouvrir dans YouTube"
+  },
+  "auth": {
+    "welcomeBack": "Bon retour",
+    "createYourAccount": "Créez votre compte",
+    "signInAccess": "Connectez-vous pour accéder à vos préférences",
+    "registerSave": "Inscrivez-vous pour sauvegarder vos goûts musicaux",
+    "signInTab": "Se connecter",
+    "registerTab": "S'inscrire",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom",
+    "email": "Email",
+    "emailPlaceholder": "vous@email.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Minimum 8 caractères",
+    "pleaseEnterName": "Veuillez entrer un nom",
+    "errorOccurred": "Une erreur s'est produite. Veuillez réessayer.",
+    "errorGuestSession": "Erreur lors de la création de la session invité",
+    "continueAsGuest": "Continuer en tant qu'invité",
+    "rememberMe": "Rester connecté",
+    "guestDisclaimer": "Les invités peuvent utiliser toutes les fonctionnalités, mais leurs préférences ne sont pas sauvegardées de façon permanente."
+  },
+  "profile": {
+    "activeAccount": "Compte Actif",
+    "searchesMade": "Recherches effectuées",
+    "songsYouLike": "Chansons que vous aimez",
+    "songsFiltered": "Chansons filtrées",
+    "searchHistory": "Historique des recherches",
+    "noSearches": "Pas encore de recherches",
+    "searchesWillAppear": "Vos recherches apparaîtront ici",
+    "aboutPreferences": "À propos de vos préférences",
+    "preferencesDescription": "Le système apprend de vos likes et dislikes pour personnaliser les recommandations. Plus vous utilisez l'application, meilleures seront les suggestions. Vos préférences sont stockées en toute sécurité et utilisées uniquement pour améliorer votre expérience.",
+    "songs": "chansons"
+  },
+  "language": {
+    "select": "Langue",
+    "en": "Anglais",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "fr": "Français",
+    "it": "Italien",
+    "hi": "Hindi"
+  },
+  "theme": {
+    "switchToDark": "Passer au mode sombre",
+    "switchToLight": "Passer au mode clair",
+    "dark": "Sombre",
+    "light": "Clair"
+  },
+  "player": {
+    "play": "Lecture",
+    "pause": "Pause",
+    "close": "Fermer le lecteur",
+    "expand": "Agrandir le lecteur",
+    "collapse": "Réduire le lecteur",
+    "noVideo": "Aucune vidéo disponible pour cette chanson",
+    "searchOnYouTube": "Rechercher sur YouTube"
+  }
+}

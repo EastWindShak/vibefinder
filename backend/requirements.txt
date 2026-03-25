@@ -1,0 +1,55 @@
+# FastAPI and server
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# Database
+sqlalchemy>=2.0.25
+asyncpg>=0.29.0
+alembic>=1.13.1
+psycopg2-binary>=2.9.9
+
+# ChromaDB for vector storage
+chromadb>=0.4.22
+
+# E5-large embeddings for semantic search
+sentence-transformers>=2.2.2
+
+# Authentication
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.1.2
+
+# HTTP client
+httpx>=0.26.0
+aiohttp>=3.9.3
+
+# Audio identification
+shazamio>=0.6.0
+
+# Audio analysis (CLAP model for mood/genre extraction)
+# Note: These are optional but enable advanced audio analysis features
+transformers>=4.36.0
+librosa>=0.10.1
+soundfile>=0.12.1
+# torch is required by transformers - install separately if needed:
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# YouTube Music integration
+ytmusicapi>=1.4.2
+
+# MCP (Model Context Protocol)
+mcp>=1.2.0
+
+# Ollama client
+ollama>=0.1.6
+
+# LLM Observability (v2 for self-hosted Langfuse v2 server)
+langfuse>=2.0.0,<3.0.0
+
+# Utilities
+python-dotenv>=1.0.1
+pydantic[email]>=2.5.3
+pydantic-settings>=2.1.0
+cryptography>=41.0.7
+email-validator>=2.1.0

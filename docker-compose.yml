@@ -1,0 +1,231 @@
+# Full stack VibeFinder Docker Compose
+# 
+# Usage:
+#   Quick start (all services):
+#     docker compose up -d
+#     On first run, the Ollama service pulls OLLAMA_MODEL from .env (can take several minutes).
+#
+#   Development (with frontend hot reload):
+#     docker compose --profile frontend-dev up -d
+#
+#   Production (with nginx):
+#     docker compose --profile frontend-prod up -d
+#
+#   Without Ollama in Docker (use host Ollama):
+#     docker compose up -d postgres chromadb langfuse-db langfuse backend
+#     # Then set OLLAMA_BASE_URL=http://host.docker.internal:11434 in .env
+#
+# Individual services:
+#   docker compose up -d postgres        # Just PostgreSQL
+#   docker compose up -d chromadb        # Just ChromaDB
+#   docker compose up -d ollama          # Just Ollama
+
+services:
+  # ===================
+  # DATABASE SERVICES (always available)
+  # ===================
+  
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: vibefinder-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vibefinder}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vibefinder123}
+      POSTGRES_DB: ${POSTGRES_DB:-vibefinder}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vibefinder} -d ${POSTGRES_DB:-vibefinder}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ChromaDB Vector Database
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: vibefinder-chromadb
+    restart: unless-stopped
+    volumes:
+      - chroma_data:/chroma/chroma
+    ports:
+      - "8001:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+
+  # ===================
+  # OBSERVABILITY (always available)
+  # ===================
+  
+  # Langfuse PostgreSQL (separate from app database)
+  langfuse-db:
+    image: postgres:16-alpine
+    container_name: vibefinder-langfuse-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: langfuse
+      POSTGRES_PASSWORD: langfuse123
+      POSTGRES_DB: langfuse
+    volumes:
+      - langfuse_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langfuse -d langfuse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Langfuse Server - LLM Observability & Prompt Management
+  langfuse:
+    image: langfuse/langfuse:2
+    container_name: vibefinder-langfuse
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://langfuse:langfuse123@langfuse-db:5432/langfuse
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-mysecretkey123456789012345678901234567890}
+      SALT: ${LANGFUSE_SALT:-mysalt12345678901234567890123456}
+      NEXTAUTH_URL: ${LANGFUSE_URL:-http://localhost:3000}
+      TELEMETRY_ENABLED: ${LANGFUSE_TELEMETRY:-false}
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "true"
+    depends_on:
+      langfuse-db:
+        condition: service_healthy
+
+  # ===================
+  # AI SERVICE (always available)
+  # ===================
+  
+  # Ollama AI - can also run on host machine
+  ollama:
+    image: ollama/ollama:latest
+    container_name: vibefinder-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_NUM_PARALLEL=2
+      - NVIDIA_VISIBLE_DEVICES=all
+      # Same as backend; entrypoint runs: ollama pull $OLLAMA_PULL_MODEL
+      - OLLAMA_PULL_MODEL=${OLLAMA_MODEL:-llama3.1}
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./ollama/entrypoint.sh:/entrypoint.sh:ro
+    # Strip CR if entrypoint.sh was saved with Windows CRLF (avoids ": not found")
+    entrypoint: ["/bin/sh", "-c", "tr -d '\\015' < /entrypoint.sh | /bin/sh"]
+    # GPU: optional override file — see docker-compose.gpu.yml
+    # Healthy when the daemon responds (model may still be downloading on first run).
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+
+  # ===================
+  # BACKEND SERVICE (always available)
+  # ===================
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vibefinder-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Database
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-vibefinder}:${POSTGRES_PASSWORD:-vibefinder123}@postgres:5432/${POSTGRES_DB:-vibefinder}
+      DATABASE_URL_SYNC: postgresql://${POSTGRES_USER:-vibefinder}:${POSTGRES_PASSWORD:-vibefinder123}@postgres:5432/${POSTGRES_DB:-vibefinder}
+      # ChromaDB
+      CHROMADB_HOST: chromadb
+      CHROMADB_PORT: 8000
+      CHROMADB_PERSIST_DIRECTORY: /app/chroma_data
+      # Security
+      SECRET_KEY: ${SECRET_KEY:-B3PoqqUbM6bz5gEXzmJEud0s3yLjCbZYnDfoWGvk3fM}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      REFRESH_TOKEN_EXPIRE_DAYS: 7
+      OAUTH_ENCRYPTION_KEY: ${OAUTH_ENCRYPTION_KEY:-mi44S8USuHrOeX4E8Xs3hhn8li_FzUliEobLBEYV_to=}
+      # Ollama - defaults to Docker container, can override with host
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://vibefinder-ollama:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1}
+      # MCP
+      MCP_YTMUSIC_SERVER_PATH: ./app/mcp/youtube_music_server.py
+      # CORS
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      # Last.fm (for song tags)
+      LASTFM_API_KEY: ${LASTFM_API_KEY:-}
+      # Audio Analysis (CLAP model)
+      ENABLE_AUDIO_ANALYSIS: ${ENABLE_AUDIO_ANALYSIS:-true}
+      AUDIO_ANALYSIS_MODEL: ${AUDIO_ANALYSIS_MODEL:-laion/larger_clap_music}
+      # Langfuse (LLM Observability)
+      LANGFUSE_HOST: ${LANGFUSE_HOST:-http://langfuse:3000}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+    volumes:
+      - chroma_local_data:/app/chroma_data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+      ollama:
+        condition: service_healthy
+
+  # ===================
+  # FRONTEND SERVICES (profiles)
+  # ===================
+  
+  # Frontend - Development (hot reload)
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: vibefinder-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://vibefinder-backend:8000
+    depends_on:
+      - backend
+    # profiles:
+    #   - frontend-dev
+
+  # Frontend - Production (nginx)
+  # frontend-prod:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   container_name: vibefinder-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - backend
+  #   profiles:
+  #     - frontend-prod
+
+volumes:
+  postgres_data:
+  chroma_data:
+  chroma_local_data:
+  ollama_data:
+  langfuse_postgres_data:
+
+networks:
+  default:
+    name: vibefinder-network

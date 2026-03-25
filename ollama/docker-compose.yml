@@ -1,0 +1,57 @@
+services:
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vibefinder-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_NUM_PARALLEL=2
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - ollama_data:/root/.ollama
+    # NVIDIA GPU support with CUDA
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+        limits:
+          memory: 16G
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Helper service to pull models on first run
+  ollama-pull:
+    image: curlimages/curl:latest
+    container_name: vibefinder-ollama-pull
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: >
+      sh -c "
+        echo 'Pulling llama3.1 model...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\": \"llama3.1\"}' &&
+        echo 'Model pull complete!'
+      "
+    profiles:
+      - setup
+
+volumes:
+  ollama_data:
+    name: vibefinder-ollama-data
+
+networks:
+  default:
+    name: vibefinder-network
+    external: true

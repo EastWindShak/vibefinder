@@ -1,0 +1,25 @@
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentation
+*.md
+!README.md
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Cursor AI
+.cursor/
+
+# Misc
+*.log
+.DS_Store

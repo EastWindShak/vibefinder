@@ -1,0 +1,220 @@
+{
+  "common": {
+    "appName": "VibeFinder",
+    "guestMode": "Modo Invitado",
+    "createAccount": "Crear Cuenta",
+    "register": "Registrarse",
+    "signIn": "Iniciar Sesión",
+    "logOut": "Cerrar sesión",
+    "close": "Cerrar",
+    "or": "o",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "remove": "Eliminar",
+    "backToHome": "Volver al inicio",
+    "play": "Reproducir",
+    "showLess": "Ver menos"
+  },
+  "home": {
+    "title": "Descubre Música con IA",
+    "subtitle": "Identifica canciones o describe tu mood y nuestra IA te recomendará la música perfecta para ti.",
+    "describeYourMood": "Describe tu Mood",
+    "identifySong": "Identificar Canción",
+    "errorGenerating": "Error al generar recomendaciones. Por favor intenta de nuevo.",
+    "errorLoadingMore": "Error al cargar más recomendaciones.",
+    "errorLoadingHistory": "Error al cargar el historial de búsqueda.",
+    "loadingHistory": "Cargando tu búsqueda anterior...",
+    "restoredFromHistory": "Restaurado del historial",
+    "newSearch": "Nueva Búsqueda",
+    "songIdentified": "Canción identificada",
+    "features": {
+      "audioId": {
+        "title": "Identificación de Audio",
+        "description": "Graba cualquier canción que escuches y la identificaremos al instante"
+      },
+      "moodBased": {
+        "title": "Recomendaciones por Mood",
+        "description": "Describe cómo te sientes y nuestra IA encontrará la música perfecta"
+      },
+      "learns": {
+        "title": "Aprende de Ti",
+        "description": "Regístrate y el sistema aprenderá tus gustos para mejores sugerencias"
+      }
+    }
+  },
+  "audioRecorder": {
+    "title": "Identificar Canción",
+    "subtitle": "Graba un fragmento de la canción que estás escuchando",
+    "identifyingSong": "Identificando canción...",
+    "recording": "Grabando...",
+    "tapToStop": "Toca para detener (mínimo 5 segundos)",
+    "tapToStart": "Toca el botón para comenzar",
+    "couldNotIdentify": "No se pudo identificar la canción. Intenta con un fragmento más largo o más claro.",
+    "errorProcessing": "Error al procesar el audio. Por favor intenta de nuevo.",
+    "microphoneError": "No se pudo acceder al micrófono. Por favor permite el acceso y vuelve a intentar.",
+    "tips": {
+      "title": "Consejos",
+      "tip1": "Acerca el dispositivo a la fuente de sonido",
+      "tip2": "Graba al menos 10 segundos para mejores resultados",
+      "tip3": "Evita ruido de fondo excesivo"
+    }
+  },
+  "moodSelector": {
+    "title": "Describe tu Mood",
+    "subtitle": "Cuéntanos cómo te sientes y te recomendaremos música perfecta",
+    "quickMoods": "Moods rápidos",
+    "orDescribe": "o describe tu propio mood",
+    "andDescribeMood": "y describe tu mood para mejores resultados",
+    "findSimilar": "Buscar Música Similar",
+    "findSimilarByVibe": "Buscar Música por Esta Vibra",
+    "orAddDescription": "O añade una descripción abajo para resultados más específicos",
+    "placeholder": "Ej: Música indie alternativa con vibes de verano...",
+    "placeholderWithSong": "Añade una descripción de mood para mejores resultados...",
+    "examples": {
+      "title": "Ejemplos de descripciones:",
+      "ex1": "Rock alternativo de los 90s con guitarras distorsionadas",
+      "ex2": "Jazz suave para una cena romántica",
+      "ex3": "Electrónica para conducir de noche"
+    },
+    "moods": {
+      "energetic": "Energético",
+      "relaxed": "Relajado",
+      "melancholic": "Melancólico",
+      "party": "Fiesta",
+      "focus": "Concentración",
+      "romantic": "Romántico",
+      "motivational": "Motivacional",
+      "nostalgic": "Nostálgico"
+    },
+    "audio": {
+      "title": "Canción de referencia",
+      "optional": "opcional",
+      "identified": "¡Canción identificada!",
+      "identifying": "Identificando canción...",
+      "dropzone": "Haz clic o arrastra un archivo de audio aquí",
+      "formats": "MP3, WAV, M4A, OGG (máx 10MB)",
+      "invalidFormat": "Formato inválido. Por favor sube un archivo de audio.",
+      "fileTooLarge": "Archivo muy grande. El tamaño máximo es 10MB.",
+      "couldNotIdentify": "No se pudo identificar la canción. Intenta con otro archivo de audio.",
+      "errorProcessing": "Error procesando el audio. Por favor intenta de nuevo.",
+      "songNotRecognized": "Canción no reconocida",
+      "describeVibeInstead": "¡No te preocupes! Describe el vibe o mood de lo que escuchaste y encontraremos música similar.",
+      "playRecording": "Reproducir grabación",
+      "pauseRecording": "Pausar",
+      "submitWithSongOnly": "Pulsa enviar para obtener recomendaciones basadas en esta canción",
+      "attachAudio": "Adjuntar archivo de audio",
+      "attachHint": "Usa el micrófono para dictar o identificar una canción",
+      "addMoodForBetter": "Describe tu mood para recomendaciones más personalizadas"
+    },
+    "recording": {
+      "start": "Iniciar grabación",
+      "stop": "Detener grabación",
+      "listening": "Escuchando...",
+      "identifyingSong": "Identificando canción...",
+      "voiceInput": "Entrada de voz",
+      "voiceInputDesc": "Dicta tu descripción de mood",
+      "identifySong": "Identificar canción",
+      "identifySongDesc": "Graba música sonando cerca",
+      "speakNow": "Habla ahora... tus palabras aparecerán en el campo de texto",
+      "playMusic": "Reproduce la canción cerca del micrófono...",
+      "speechNotSupported": "La entrada de voz no está soportada en este navegador",
+      "microphoneError": "No se pudo acceder al micrófono. Por favor permite el acceso e intenta de nuevo."
+    }
+  },
+  "recommendations": {
+    "title": "Recomendaciones para ti",
+    "songsBasedOn": "{count} canciones basadas en {type}",
+    "basedOnMood": "tu mood",
+    "basedOnSong": "la canción identificada",
+    "basedOnCombined": "tu mood y la canción de referencia",
+    "newSearch": "Nueva búsqueda",
+    "loadMore": "Cargar 10 más",
+    "loadingMore": "Cargando más...",
+    "generating": "Generando recomendaciones...",
+    "generatingSubtitle": "Nuestra IA está analizando {type} para encontrar las mejores recomendaciones",
+    "likeBanner": "¿Te gustan las recomendaciones?",
+    "createAccountBanner": "Crea una cuenta para que el sistema aprenda tus gustos y te dé mejores sugerencias."
+  },
+  "songCard": {
+    "playOnYouTube": "Reproducir en YouTube Music",
+    "like": "Me gusta",
+    "dislike": "No me gusta",
+    "addToPlaylist": "Añadir a playlist",
+    "registerToSave": "Regístrate para guardar preferencias",
+    "preview": "Vista previa",
+    "closePreview": "Cerrar vista previa",
+    "loadingPreview": "Cargando reproductor...",
+    "nowPlaying": "Reproduciendo",
+    "openInYouTube": "Abrir en YouTube"
+  },
+  "auth": {
+    "welcomeBack": "Bienvenido de vuelta",
+    "createYourAccount": "Crea tu cuenta",
+    "signInAccess": "Inicia sesión para acceder a tus preferencias",
+    "registerSave": "Regístrate para guardar tus gustos musicales",
+    "signInTab": "Iniciar Sesión",
+    "registerTab": "Registrarse",
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "email": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 8 caracteres",
+    "pleaseEnterName": "Por favor ingresa un nombre",
+    "errorOccurred": "Ha ocurrido un error. Por favor intenta de nuevo.",
+    "errorGuestSession": "Error al crear sesión de invitado",
+    "continueAsGuest": "Continuar como Invitado",
+    "rememberMe": "Mantener sesión iniciada",
+    "guestDisclaimer": "Los invitados pueden usar todas las funciones, pero sus preferencias no se guardan permanentemente."
+  },
+  "profile": {
+    "activeAccount": "Cuenta Activa",
+    "searchesMade": "Búsquedas realizadas",
+    "songsYouLike": "Canciones que te gustan",
+    "songsFiltered": "Canciones filtradas",
+    "searchHistory": "Historial de Búsquedas",
+    "noSearches": "No hay búsquedas aún",
+    "searchesWillAppear": "Tus búsquedas aparecerán aquí",
+    "aboutPreferences": "Sobre tus preferencias",
+    "preferencesDescription": "El sistema aprende de tus likes y dislikes para personalizar las recomendaciones. Cuanto más uses la aplicación, mejores serán las sugerencias. Tus preferencias se almacenan de forma segura y solo se usan para mejorar tu experiencia.",
+    "songs": "canciones",
+    "likedSongs": "Canciones Favoritas",
+    "dislikedSongs": "Canciones Bloqueadas",
+    "likedSongsDescription": "Las canciones que te gustan influyen en futuras recomendaciones",
+    "dislikedSongsDescription": "Estas canciones nunca aparecerán en tus recomendaciones",
+    "noLikedSongs": "No hay canciones favoritas aún. Dale like a canciones para guardarlas aquí.",
+    "noDislikedSongs": "No hay canciones bloqueadas. Dale dislike a canciones para ocultarlas de las recomendaciones.",
+    "removeLike": "Quitar de favoritos",
+    "removeDislike": "Desbloquear canción",
+    "showMore": "Ver {count} más"
+  },
+  "language": {
+    "select": "Idioma",
+    "en": "Inglés",
+    "de": "Alemán",
+    "es": "Español",
+    "fr": "Francés",
+    "it": "Italiano",
+    "hi": "Hindi"
+  },
+  "theme": {
+    "switchToDark": "Cambiar a modo oscuro",
+    "switchToLight": "Cambiar a modo claro",
+    "dark": "Oscuro",
+    "light": "Claro"
+  },
+  "player": {
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "close": "Cerrar reproductor",
+    "expand": "Expandir reproductor",
+    "collapse": "Minimizar reproductor",
+    "noVideo": "No hay video disponible para esta canción",
+    "searchOnYouTube": "Buscar en YouTube"
+  }
+}

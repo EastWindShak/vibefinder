@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles - Light Mode (Original) */
+body {
+  @apply bg-neutral-50 text-neutral-900 antialiased;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-400;
+}
+
+/* Audio recorder animation */
+@keyframes recording-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.recording-indicator {
+  animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+/* Song card hover effect */
+.song-card {
+  @apply transition-all duration-200 ease-out;
+}
+
+.song-card:hover {
+  @apply transform -translate-y-1;
+}
+
+/* Button base styles */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800;
+}
+
+.btn-secondary {
+  @apply bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-400;
+}
+
+.btn-outline {
+  @apply border-2 border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-100;
+}
+
+/* Input styles */
+.input {
+  @apply w-full py-3 pr-4 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  padding-left: var(--input-pl, 1rem);
+}
+
+.input-with-icon {
+  --input-pl: 2.75rem;
+}
+
+.input-with-icon-lg {
+  --input-pl: 3rem;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-neutral-200;
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  @apply bg-neutral-200 rounded;
+  background: linear-gradient(
+    90deg,
+    theme('colors.neutral.200') 25%,
+    theme('colors.neutral.100') 50%,
+    theme('colors.neutral.200') 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   These only apply when html has 'dark' class
+   ============================================ */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  @apply bg-neutral-950 text-neutral-100;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  @apply bg-neutral-900;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  @apply bg-neutral-700;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-600;
+}
+
+html.dark .btn-secondary {
+  @apply bg-neutral-800 text-neutral-200 hover:bg-neutral-700 active:bg-neutral-600;
+}
+
+html.dark .btn-outline {
+  @apply border-neutral-600 text-neutral-300 hover:border-neutral-500 hover:bg-neutral-800;
+}
+
+html.dark .input {
+  @apply border-neutral-700 bg-neutral-900 text-neutral-100 placeholder-neutral-500;
+}
+
+html.dark .card {
+  @apply bg-neutral-900 border-neutral-800;
+}
+
+html.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    theme('colors.neutral.800') 25%,
+    theme('colors.neutral.700') 50%,
+    theme('colors.neutral.800') 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* Dark mode text color overrides for common patterns */
+html.dark .text-neutral-900 {
+  @apply text-neutral-100;
+}
+
+html.dark .text-neutral-800 {
+  @apply text-neutral-200;
+}
+
+html.dark .text-neutral-700 {
+  @apply text-neutral-300;
+}
+
+html.dark .text-neutral-600 {
+  @apply text-neutral-400;
+}
+
+html.dark .text-neutral-500 {
+  @apply text-neutral-400;
+}
+
+/* Dark mode background overrides */
+html.dark .bg-neutral-50 {
+  @apply bg-neutral-950;
+}
+
+html.dark .bg-neutral-100 {
+  @apply bg-neutral-800;
+}
+
+html.dark .bg-neutral-200 {
+  @apply bg-neutral-700;
+}
+
+html.dark .bg-white {
+  @apply bg-neutral-900;
+}
+
+/* Dark mode border overrides */
+html.dark .border-neutral-200 {
+  @apply border-neutral-800;
+}
+
+html.dark .border-neutral-300 {
+  @apply border-neutral-700;
+}
+
+/* Dark mode for colored backgrounds */
+html.dark .bg-primary-100 {
+  background-color: rgba(var(--color-primary-600), 0.2);
+}
+
+html.dark .bg-primary-50 {
+  background-color: rgba(var(--color-primary-600), 0.15);
+}
+
+html.dark .bg-green-50 {
+  @apply bg-green-900/20;
+}
+
+html.dark .bg-green-100 {
+  @apply bg-green-900/30;
+}
+
+html.dark .bg-red-50 {
+  @apply bg-red-900/20;
+}
+
+html.dark .bg-red-100 {
+  @apply bg-red-900/30;
+}
+
+html.dark .bg-blue-100 {
+  @apply bg-blue-900/30;
+}
+
+/* Dark mode hover states */
+html.dark .hover\:bg-neutral-50:hover {
+  @apply bg-neutral-800;
+}
+
+html.dark .hover\:bg-neutral-100:hover {
+  @apply bg-neutral-700;
+}
+
+html.dark .hover\:bg-neutral-200:hover {
+  @apply bg-neutral-600;
+}
+
+/* Mini Player - Always dark style (like YouTube Music) */
+.mini-player {
+  /* Force dark styling regardless of theme */
+}
+
+/* Volume slider styling */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #404040;
+  cursor: pointer;
+}
+
+/* Chrome/Safari - Track styling with dynamic fill */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, 
+    #ef4444 0%, 
+    #ef4444 var(--volume-percent, 60%), 
+    #404040 var(--volume-percent, 60%), 
+    #404040 100%
+  );
+}
+
+/* Chrome/Safari - Thumb always visible */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  margin-top: -4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Firefox - Track styling */
+.volume-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: #404040;
+}
+
+/* Firefox - Progress fill (red) */
+.volume-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: #ef4444;
+}
+
+/* Firefox - Thumb always visible */
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+html.dark .hover\:bg-red-50:hover {
+  @apply bg-red-900/20;
+}
+
+html.dark .bg-blue-50 {
+  @apply bg-blue-900/20;
+}

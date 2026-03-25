@@ -1,0 +1,220 @@
+{
+  "common": {
+    "appName": "VibeFinder",
+    "guestMode": "Guest Mode",
+    "createAccount": "Create Account",
+    "register": "Register",
+    "signIn": "Sign In",
+    "logOut": "Log out",
+    "close": "Close",
+    "or": "or",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "remove": "Remove",
+    "backToHome": "Back to home",
+    "play": "Play",
+    "showLess": "Show less"
+  },
+  "home": {
+    "title": "Discover Music with AI",
+    "subtitle": "Identify songs or describe your mood and our AI will recommend the perfect music for you.",
+    "describeYourMood": "Describe Your Mood",
+    "identifySong": "Identify Song",
+    "errorGenerating": "Error generating recommendations. Please try again.",
+    "errorLoadingMore": "Error loading more recommendations.",
+    "errorLoadingHistory": "Error loading search history.",
+    "loadingHistory": "Loading your previous search...",
+    "restoredFromHistory": "Restored from history",
+    "newSearch": "New Search",
+    "songIdentified": "Song identified",
+    "features": {
+      "audioId": {
+        "title": "Audio Identification",
+        "description": "Record any song you hear and we'll identify it instantly"
+      },
+      "moodBased": {
+        "title": "Mood-Based Recommendations",
+        "description": "Describe how you're feeling and our AI will find the perfect music"
+      },
+      "learns": {
+        "title": "Learns From You",
+        "description": "Register and the system will learn your tastes for better suggestions"
+      }
+    }
+  },
+  "audioRecorder": {
+    "title": "Identify Song",
+    "subtitle": "Record a snippet of the song you're listening to",
+    "identifyingSong": "Identifying song...",
+    "recording": "Recording...",
+    "tapToStop": "Tap to stop (minimum 5 seconds)",
+    "tapToStart": "Tap the button to start",
+    "couldNotIdentify": "Could not identify the song. Try with a longer or clearer audio sample.",
+    "errorProcessing": "Error processing audio. Please try again.",
+    "microphoneError": "Could not access microphone. Please allow access and try again.",
+    "tips": {
+      "title": "Tips",
+      "tip1": "Bring your device closer to the sound source",
+      "tip2": "Record at least 10 seconds for better results",
+      "tip3": "Avoid excessive background noise"
+    }
+  },
+  "moodSelector": {
+    "title": "Describe Your Mood",
+    "subtitle": "Tell us how you're feeling and we'll recommend the perfect music",
+    "quickMoods": "Quick moods",
+    "orDescribe": "or describe your own mood",
+    "andDescribeMood": "and describe your mood for better results",
+    "findSimilar": "Find Similar Music",
+    "findSimilarByVibe": "Find Music by This Vibe",
+    "orAddDescription": "Or add a description below for more specific results",
+    "placeholder": "E.g., Indie alternative music with summer vibes...",
+    "placeholderWithSong": "Add a mood description for better results...",
+    "examples": {
+      "title": "Example descriptions:",
+      "ex1": "90s alternative rock with distorted guitars",
+      "ex2": "Smooth jazz for a romantic dinner",
+      "ex3": "Electronic music for a night drive"
+    },
+    "moods": {
+      "energetic": "Energetic",
+      "relaxed": "Relaxed",
+      "melancholic": "Melancholic",
+      "party": "Party",
+      "focus": "Focus",
+      "romantic": "Romantic",
+      "motivational": "Motivational",
+      "nostalgic": "Nostalgic"
+    },
+    "audio": {
+      "title": "Reference song",
+      "optional": "optional",
+      "identified": "Song identified!",
+      "identifying": "Identifying song...",
+      "dropzone": "Click or drop an audio file here",
+      "formats": "MP3, WAV, M4A, OGG (max 10MB)",
+      "invalidFormat": "Invalid format. Please upload an audio file.",
+      "fileTooLarge": "File too large. Maximum size is 10MB.",
+      "couldNotIdentify": "Could not identify the song. Try with a different audio file.",
+      "errorProcessing": "Error processing audio. Please try again.",
+      "songNotRecognized": "Song not recognized",
+      "describeVibeInstead": "No worries! Describe the vibe or mood of what you heard and we'll find similar music.",
+      "playRecording": "Play recording",
+      "pauseRecording": "Pause",
+      "submitWithSongOnly": "Press send to get recommendations based on this song",
+      "attachAudio": "Attach audio file",
+      "attachHint": "Use the microphone to dictate or identify a song",
+      "addMoodForBetter": "Describe your mood for more personalized recommendations"
+    },
+    "recording": {
+      "start": "Start recording",
+      "stop": "Stop recording",
+      "listening": "Listening...",
+      "identifyingSong": "Identifying song...",
+      "voiceInput": "Voice input",
+      "voiceInputDesc": "Dictate your mood description",
+      "identifySong": "Identify song",
+      "identifySongDesc": "Record music playing nearby",
+      "speakNow": "Speak now... your words will appear in the text field",
+      "playMusic": "Play the song near your microphone...",
+      "speechNotSupported": "Voice input is not supported in this browser",
+      "microphoneError": "Could not access microphone. Please allow access and try again."
+    }
+  },
+  "recommendations": {
+    "title": "Recommendations for you",
+    "songsBasedOn": "{count} songs based on {type}",
+    "basedOnMood": "your mood",
+    "basedOnSong": "the identified song",
+    "basedOnCombined": "your mood and the reference song",
+    "newSearch": "New search",
+    "loadMore": "Load 10 more",
+    "loadingMore": "Loading more...",
+    "generating": "Generating recommendations...",
+    "generatingSubtitle": "Our AI is analyzing {type} to find the best recommendations",
+    "likeBanner": "Like the recommendations?",
+    "createAccountBanner": "Create an account so the system can learn your tastes and give you better suggestions."
+  },
+  "songCard": {
+    "playOnYouTube": "Play on YouTube Music",
+    "like": "Like",
+    "dislike": "Dislike",
+    "addToPlaylist": "Add to playlist",
+    "registerToSave": "Register to save preferences",
+    "preview": "Preview song",
+    "closePreview": "Close preview",
+    "loadingPreview": "Loading player...",
+    "nowPlaying": "Now playing",
+    "openInYouTube": "Open in YouTube"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "createYourAccount": "Create your account",
+    "signInAccess": "Sign in to access your preferences",
+    "registerSave": "Register to save your music tastes",
+    "signInTab": "Sign In",
+    "registerTab": "Register",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "Minimum 8 characters",
+    "pleaseEnterName": "Please enter a name",
+    "errorOccurred": "An error occurred. Please try again.",
+    "errorGuestSession": "Error creating guest session",
+    "continueAsGuest": "Continue as Guest",
+    "rememberMe": "Keep me signed in",
+    "guestDisclaimer": "Guests can use all features, but their preferences are not permanently saved."
+  },
+  "profile": {
+    "activeAccount": "Active Account",
+    "searchesMade": "Searches made",
+    "songsYouLike": "Songs you like",
+    "songsFiltered": "Songs filtered out",
+    "searchHistory": "Search History",
+    "noSearches": "No searches yet",
+    "searchesWillAppear": "Your searches will appear here",
+    "aboutPreferences": "About your preferences",
+    "preferencesDescription": "The system learns from your likes and dislikes to personalize recommendations. The more you use the app, the better the suggestions will be. Your preferences are stored securely and only used to improve your experience.",
+    "songs": "songs",
+    "likedSongs": "Liked Songs",
+    "dislikedSongs": "Blocked Songs",
+    "likedSongsDescription": "Songs you've liked influence future recommendations",
+    "dislikedSongsDescription": "These songs will never appear in your recommendations",
+    "noLikedSongs": "No liked songs yet. Like songs to save them here.",
+    "noDislikedSongs": "No blocked songs. Dislike songs to hide them from recommendations.",
+    "removeLike": "Remove from likes",
+    "removeDislike": "Unblock song",
+    "showMore": "Show {count} more"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "de": "German",
+    "es": "Spanish",
+    "fr": "French",
+    "it": "Italian",
+    "hi": "Hindi"
+  },
+  "theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode",
+    "dark": "Dark",
+    "light": "Light"
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "close": "Close player",
+    "expand": "Expand player",
+    "collapse": "Collapse player",
+    "noVideo": "No video available for this song",
+    "searchOnYouTube": "Search on YouTube"
+  }
+}

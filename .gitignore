@@ -1,0 +1,71 @@
+# Environment variables / secrets
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!.env.example.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python build/test artifacts
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.cover
+
+# Lint/type-check caches
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.dmypy.json
+.pyre/
+
+# Jupyter (if used)
+.ipynb_checkpoints/
+
+# Node / frontend (Vite/React/etc.)
+node_modules/
+.npm/
+.yarn/
+.pnpm/
+
+dist/
+build/
+out/
+
+# Vite/TS build info
+*.tsbuildinfo
+.vite/
+
+# Logs/temp files
+*.log
+*.tmp
+*.temp
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PostgreSQL local data/backups (volume-like)
+postgresdb/backups/
+postgresdb/backups/**
+
