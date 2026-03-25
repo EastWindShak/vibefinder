@@ -22,7 +22,7 @@ AI-powered music discovery application that uses Ollama (llama3.1) to recommend 
 - **AI Recommendations**: Get 10 personalized song recommendations based on identified audio or mood description
 - **User Preferences**: Registered users' preferences are stored and learned over time
 - **Guest Mode**: Non-registered users can use the app with session-based preferences
-- **YouTube Music Integration**: Search songs and add to playlists via MCP
+- **YouTube Music Integration**: Search songs and play them via MCP
 
 ## Use Cases
 
@@ -521,13 +521,13 @@ User Input → LLM (Ollama) → MCP Client → MCP Server → YouTube Music API
 
 ### Our Custom YouTube Music MCP Server
 
-We built a custom MCP server from scratch that wraps the `ytmusicapi` library. It's located at:
+I built a custom MCP server from scratch that wraps the `ytmusicapi` library. It's located at:
 
 ```
 backend/app/mcp/youtube_music_server.py
 ```
 
-**Why custom?** There's no official YouTube Music MCP server available. We created one specifically for VibeFinder's needs.
+**Why custom?** There's no official YouTube Music MCP server available. I created one specifically for VibeFinder's needs.
 
 ### Available MCP Tools
 
@@ -657,221 +657,15 @@ It communicates via stdio (standard input/output) following the MCP specificatio
 | `mcp` | Official MCP SDK from Anthropic |
 | `ytmusicapi` | Unofficial YouTube Music API wrapper |
 
-### Extending the MCP Server
 
-To add a new tool:
+## What to improve
 
-1. **Define the tool** in `list_tools()`:
-```python
-Tool(
-    name="my_new_tool",
-    description="What this tool does",
-    inputSchema={
-        "type": "object",
-        "properties": {
-            "param1": {"type": "string", "description": "..."}
-        },
-        "required": ["param1"]
-    }
-)
-```
+Possible next steps and integrations (TODO / roadmap):
 
-2. **Implement the handler** in `call_tool()`:
-```python
-elif name == "my_new_tool":
-    result = await self._my_new_tool(ytmusic, arguments["param1"])
-```
-
-3. **Create the method**:
-```python
-async def _my_new_tool(self, ytmusic: YTMusic, param1: str) -> Dict[str, Any]:
-    # Implementation
-    return {"success": True, "data": ...}
-```
-
-### Authentication for Playlist Management
-
-To use authenticated features (playlists), you need YouTube Music headers:
-
-1. Go to [music.youtube.com](https://music.youtube.com) in your browser
-2. Open Developer Tools (F12) → Network tab
-3. Click on any request to `music.youtube.com`
-4. Copy the request headers (Cookie, Authorization, etc.)
-5. Save them as JSON and pass to the tool
-
-> **Note:** The `ytmusicapi` library provides a setup command: `ytmusicapi oauth` for easier authentication.
-
----
-
-## Security Keys
-
-The application uses two security keys in the `.env` file:
-
-### SECRET_KEY vs OAUTH_ENCRYPTION_KEY
-
-| | **SECRET_KEY** | **OAUTH_ENCRYPTION_KEY** |
-|---|---|---|
-| **Purpose** | Sign JWT tokens (prove authenticity) | Encrypt OAuth tokens (hide content) |
-| **Algorithm** | HMAC signing (HS256) | Fernet symmetric encryption |
-| **What it protects** | User login sessions | Third-party service credentials |
-| **Stores data?** | No - JWT is stored on client | Yes - encrypted tokens in database |
-| **If leaked** | Attacker can forge login tokens | Attacker can read stored OAuth tokens |
-
-### SECRET_KEY - For app authentication
-
-Used to sign JWT (JSON Web Tokens) for user authentication:
-
-```
-User logs in → Server creates JWT → JWT sent to browser
-                    ↓
-         JWT = { user_id: 123, exp: ... } + SIGNATURE
-                                              ↑
-                              Created using SECRET_KEY
-```
-
-- The JWT **is not encrypted** - anyone can read its contents
-- The SECRET_KEY creates a **signature** to verify the token wasn't modified
-- Used every time a user makes an API request to verify their identity
-
-Generate a SECRET_KEY:
-```bash
-python -c "import secrets; print(secrets.token_urlsafe(32))"
-```
-
-### OAUTH_ENCRYPTION_KEY - For storing external service tokens
-
-Used to encrypt OAuth tokens from third-party services (like YouTube Music) before storing in the database:
-
-```
-User connects YouTube Music → YouTube gives access_token
-                                       ↓
-                    encrypt_oauth_token(access_token) → "gAAAAABh..."
-                                       ↓
-                         Stored encrypted in database
-                                       ↓
-         When needed: decrypt_oauth_token("gAAAAABh...") → original token
-```
-
-- The OAuth token **is encrypted** - no one can read it without the key
-- Used to securely store credentials for third-party services
-- Only used when your app needs to call YouTube Music API
-
-Generate an OAUTH_ENCRYPTION_KEY (Fernet key):
-```bash
-python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-```
-
-### Simple Analogy
-
-- **SECRET_KEY** = Your signature on a document (proves YOU wrote it)
-- **OAUTH_ENCRYPTION_KEY** = A locked safe (hides what's inside)
-
-> **Important:** Keep these keys secure and never commit them to version control. If you lose or change the OAUTH_ENCRYPTION_KEY, all stored OAuth tokens become unreadable and users will need to re-authenticate with external services.
-
-## Database Migrations (Alembic)
-
-VibeFinder uses **Alembic** for database schema migrations. Alembic is a lightweight database migration tool for SQLAlchemy that allows you to track and apply changes to your database schema over time.
-
-### What is Alembic?
-
-Alembic manages database schema changes in a version-controlled way:
-
-```
-backend/alembic/
-├── alembic.ini         # Alembic configuration
-├── env.py              # Environment configuration (DB connection)
-├── script.py.mako      # Template for migration scripts
-└── versions/           # Migration files stored here
-    └── 001_initial.py  # Example: first migration
-```
-
-### Why Use Alembic?
-
-| Problem | Alembic Solution |
-|---------|------------------|
-| Schema changes break production | Migrations are versioned and reversible |
-| Team members have different DB states | Everyone runs the same migrations |
-| Manual SQL is error-prone | Auto-generates migrations from model changes |
-| Hard to track what changed | Each migration is documented and timestamped |
-
-### Common Commands
-
-```bash
-# Navigate to backend directory
-cd backend
-
-# Check current migration status
-alembic current
-
-# Apply all pending migrations
-alembic upgrade head
-
-# Revert the last migration
-alembic downgrade -1
-
-# Revert all migrations
-alembic downgrade base
-
-# Create a new migration after changing models
-alembic revision --autogenerate -m "Add profile picture to users"
-
-# Create an empty migration (for custom SQL)
-alembic revision -m "Add custom index"
-```
-
-### Typical Workflow
-
-1. **Modify your models** in `backend/app/db/models.py`:
-   ```python
-   class User(Base):
-       # ... existing fields ...
-       profile_picture = Column(String, nullable=True)  # New field
-   ```
-
-2. **Generate a migration**:
-   ```bash
-   alembic revision --autogenerate -m "Add profile_picture to users"
-   ```
-
-3. **Review the generated migration** in `alembic/versions/`:
-   ```python
-   def upgrade():
-       op.add_column('users', sa.Column('profile_picture', sa.String(), nullable=True))
-
-   def downgrade():
-       op.drop_column('users', 'profile_picture')
-   ```
-
-4. **Apply the migration**:
-   ```bash
-   alembic upgrade head
-   ```
-
-### Docker Usage
-
-When running with Docker, migrations run inside the container:
-
-```bash
-# Run migrations in Docker
-docker exec vibefinder-backend alembic upgrade head
-
-# Check migration status
-docker exec vibefinder-backend alembic current
-
-# Create new migration
-docker exec vibefinder-backend alembic revision --autogenerate -m "Description"
-```
-
-### Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| "Target database is not up to date" | Run `alembic upgrade head` |
-| "Can't locate revision" | Check if migration files exist in `versions/` |
-| Migration conflicts | Manually resolve or `alembic merge heads` |
-| Want to start fresh | `alembic downgrade base` then `alembic upgrade head` |
-
-> **Tip:** Always backup your database before running migrations in production. Use `alembic upgrade --sql head` to preview the SQL that will be executed.
+1. **Link with YouTube Music account** — Full OAuth flow and persistent account linking so recommendations and library actions run as the authenticated user.
+2. **MCP playlist workflows** — Use MCP to add recommended songs to **new or existing** playlists on that linked YouTube Music account.
+3. **Synced likes / dislikes** — When a user likes or dislikes in VibeFinder, mirror that as likes/dislikes (or library signals) on YouTube Music where the API allows it.
+4. **Langfuse prompt management** — Centralize and version LLM prompts in Langfuse (fetch, evaluate, and iterate on prompts used for recommendations instead of only hard-coded strings).
 
 ## License
 
