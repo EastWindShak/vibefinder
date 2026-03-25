@@ -10,7 +10,7 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import User, OAuthToken, IAHistory
+from app.db.models import User, OAuthToken, IAHistory, UserPreferenceFeedback
 from app.core.security import (
     get_password_hash,
     verify_password,
@@ -321,6 +321,32 @@ class UserService:
         await self.db.refresh(history)
         
         return history
+
+    async def get_user_likes(
+        self,
+        user_id: uuid.UUID,
+        limit: int = 100
+    ) -> list:
+        """
+        Get user's liked songs.
+        """
+        print(user_id)
+        query = select(UserPreferenceFeedback).where(UserPreferenceFeedback.user_id == user_id, UserPreferenceFeedback.feedback_score == 1).order_by(UserPreferenceFeedback.created_at.desc()).limit(limit)
+        result = await self.db.execute(query)
+        return list(result.scalars().all())
+    
+    async def get_user_dislikes(
+        self,
+        user_id: uuid.UUID,
+        limit: int = 100
+    ) -> list:
+        """
+        Get user's disliked songs.
+        """
+        print(user_id)
+        query = select(UserPreferenceFeedback).where(UserPreferenceFeedback.user_id == user_id, UserPreferenceFeedback.feedback_score == 0).order_by(UserPreferenceFeedback.created_at.desc()).limit(limit)
+        result = await self.db.execute(query)
+        return list(result.scalars().all())
     
     async def get_recommendation_history(
         self,

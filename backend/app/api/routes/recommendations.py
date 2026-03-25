@@ -496,6 +496,87 @@ async def submit_feedback(
         "saved_to_chromadb": True
     }
 
+@router.get("/preferences/likes", response_model=PreferencesResponse)
+async def get_liked_songs(
+    limit: int = 100,
+    current_user: CurrentUser = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Get user's liked songs.
+    
+    Returns a list of songs the user has liked, with their IDs for deletion.
+    Requires authentication (registered user only).
+    """
+    if current_user.is_guest:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Guests cannot access preferences. Please register."
+        )
+    
+    user_service = UserService(db)
+    preferences = await user_service.get_user_likes(
+        user_id=current_user.user_id,
+        limit=limit
+    )
+    print(preferences)
+    
+    return PreferencesResponse(
+        preferences=[
+            PreferenceItem(
+                id=p["id"],
+                song_title=p["song_title"],
+                artist=p["artist"],
+                genre=p.get("genre"),
+                video_id=p.get("video_id"),
+                mood_tags=p.get("mood_tags", [])
+            )
+            for p in preferences
+        ],
+        total=len(preferences),
+        type="likes"
+    )    
+
+@router.get("/preferences/dislikes", response_model=PreferencesResponse)
+async def get_disliked_songs(
+    limit: int = 100,
+    current_user: CurrentUser = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Get user's disliked songs.
+    
+    Returns a list of songs the user has disliked (blocked), with their IDs for deletion.
+    Disliked songs will never appear in recommendations.
+    Requires authentication (registered user only).
+    """
+    if current_user.is_guest:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Guests cannot access preferences. Please register."
+        )
+    
+    user_service = UserService(db)
+    preferences = await user_service.get_user_dislikes(
+        user_id=current_user.user_id,
+        limit=limit
+    )
+    print(preferences)
+    return PreferencesResponse(
+        preferences=[
+            PreferenceItem(
+                id=p["id"],
+                song_title=p["song_title"],
+                artist=p["artist"],
+                genre=p.get("genre"),
+                video_id=p.get("video_id"),
+                mood_tags=p.get("mood_tags", [])
+            )
+            for p in preferences
+        ],
+        total=len(preferences),
+        type="dislikes"
+    )
 
 @router.get("/history")
 async def get_recommendation_history(
@@ -594,87 +675,8 @@ async def get_preferences_counts(
     )
 
 
-@router.get("/preferences/likes", response_model=PreferencesResponse)
-async def get_liked_songs(
-    limit: int = 100,
-    current_user: CurrentUser = Depends(get_current_user)
-):
-    """
-    Get user's liked songs.
-    
-    Returns a list of songs the user has liked, with their IDs for deletion.
-    Requires authentication (registered user only).
-    """
-    if current_user.is_guest:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Guests cannot access preferences. Please register."
-        )
-    
-    chromadb = get_chromadb_client()
-    preferences = await chromadb.get_user_preferences_with_ids(
-        user_id=current_user.user_id,
-        preference_type="likes",
-        limit=limit
-    )
-    
-    return PreferencesResponse(
-        preferences=[
-            PreferenceItem(
-                id=p["id"],
-                song_title=p["song_title"],
-                artist=p["artist"],
-                genre=p.get("genre"),
-                video_id=p.get("video_id"),
-                mood_tags=p.get("mood_tags", [])
-            )
-            for p in preferences
-        ],
-        total=len(preferences),
-        type="likes"
-    )
 
 
-@router.get("/preferences/dislikes", response_model=PreferencesResponse)
-async def get_disliked_songs(
-    limit: int = 100,
-    current_user: CurrentUser = Depends(get_current_user)
-):
-    """
-    Get user's disliked songs.
-    
-    Returns a list of songs the user has disliked (blocked), with their IDs for deletion.
-    Disliked songs will never appear in recommendations.
-    Requires authentication (registered user only).
-    """
-    if current_user.is_guest:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Guests cannot access preferences. Please register."
-        )
-    
-    chromadb = get_chromadb_client()
-    preferences = await chromadb.get_user_preferences_with_ids(
-        user_id=current_user.user_id,
-        preference_type="dislikes",
-        limit=limit
-    )
-    
-    return PreferencesResponse(
-        preferences=[
-            PreferenceItem(
-                id=p["id"],
-                song_title=p["song_title"],
-                artist=p["artist"],
-                genre=p.get("genre"),
-                video_id=p.get("video_id"),
-                mood_tags=p.get("mood_tags", [])
-            )
-            for p in preferences
-        ],
-        total=len(preferences),
-        type="dislikes"
-    )
 
 
 @router.delete("/preferences/{preference_type}/{preference_id}")
