@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { Sparkles, Send, Zap, Paperclip, X, Music2, Loader2, Mic, Square, MessageSquare, Play, Pause } from 'lucide-react'
+import { Sparkles, Send, Zap, X, Music2, Loader2, Mic, Square, MessageSquare, Play, Pause } from 'lucide-react'
 import { useTranslation } from '../context/LanguageContext'
 import { usePlayer } from '../context/PlayerContext'
 import { audioApi, AudioIdentificationResponse, AudioAnalysisResult } from '../services/api'
@@ -27,8 +27,7 @@ export default function MoodSelector({ onMoodSubmit, isLoading }: MoodSelectorPr
   const [capturedAudioUrl, setCapturedAudioUrl] = useState<string | null>(null) // Store captured audio for playback
   const [isPlayingCaptured, setIsPlayingCaptured] = useState(false)
   const capturedAudioRef = useRef<HTMLAudioElement | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  
+
   // Recording state
   const [showRecordMenu, setShowRecordMenu] = useState(false)
   const [recordingMode, setRecordingMode] = useState<RecordingMode>(null)
@@ -78,59 +77,6 @@ export default function MoodSelector({ onMoodSubmit, isLoading }: MoodSelectorPr
       }
     }
   }, [capturedAudioUrl])
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    const validTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/webm', 'audio/ogg', 'audio/mp4', 'audio/m4a']
-    if (!validTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|webm|ogg|m4a|mp4)$/i)) {
-      setAudioError(t('moodSelector.audio.invalidFormat'))
-      return
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      setAudioError(t('moodSelector.audio.fileTooLarge'))
-      return
-    }
-
-    setAudioError(null)
-    setSongNotRecognized(false)
-    setIsIdentifying(true)
-    
-    // Clean up previous captured audio
-    if (capturedAudioUrl) {
-      URL.revokeObjectURL(capturedAudioUrl)
-      setCapturedAudioUrl(null)
-    }
-
-    try {
-      const result = await audioApi.identifyAudio(file)
-      if (result.identified) {
-        setIdentifiedSong(result)
-        setSongNotRecognized(false)
-        setCapturedAudioUrl(null)
-      } else {
-        // Song not identified - store CLAP analysis and audio for playback
-        const audioUrl = URL.createObjectURL(file)
-        setCapturedAudioUrl(audioUrl)
-        setSongNotRecognized(true)
-        setIdentifiedSong(null)
-        // Store CLAP audio analysis for Case 3
-        if (result.audio_analysis) {
-          setAudioAnalysis(result.audio_analysis)
-        }
-      }
-    } catch (err) {
-      setAudioError(t('moodSelector.audio.errorProcessing'))
-    } finally {
-      setIsIdentifying(false)
-    }
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }
 
   const handleRemoveSong = () => {
     setIdentifiedSong(null)
@@ -606,36 +552,13 @@ export default function MoodSelector({ onMoodSubmit, isLoading }: MoodSelectorPr
       {/* Chat-style input */}
       <form onSubmit={handleSubmit}>
         <div className="relative flex items-center bg-white border border-neutral-300 rounded-xl focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-transparent transition-all">
-          {/* File upload button */}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="audio/*,.mp3,.wav,.webm,.ogg,.m4a"
-            onChange={handleFileChange}
-            className="hidden"
-            id="audio-upload"
-          />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isIdentifying || isLoading || isRecording}
-            className="flex-shrink-0 p-3 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-l-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            title={t('moodSelector.audio.attachAudio')}
-          >
-            {isIdentifying ? (
-              <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
-            ) : (
-              <Paperclip className="w-5 h-5" />
-            )}
-          </button>
-
           {/* Microphone button with menu */}
           <div className="relative flex-shrink-0" ref={menuRef}>
             <button
               type="button"
               onClick={() => isRecording ? stopRecording() : setShowRecordMenu(!showRecordMenu)}
               disabled={isIdentifying || isLoading}
-              className={`p-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`p-3 rounded-l-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                 isRecording 
                   ? 'text-red-500 hover:text-red-600 bg-red-50' 
                   : 'text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100'
@@ -644,6 +567,8 @@ export default function MoodSelector({ onMoodSubmit, isLoading }: MoodSelectorPr
             >
               {isRecording ? (
                 <Square className="w-5 h-5" fill="currentColor" />
+              ) : isIdentifying ? (
+                <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
               ) : (
                 <Mic className="w-5 h-5" />
               )}

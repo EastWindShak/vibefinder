@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Play, ThumbsUp, ThumbsDown, Plus, ExternalLink, Music } from 'lucide-react'
+import { Play, ThumbsUp, ThumbsDown, ExternalLink, Music } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Song, recommendationsApi } from '../services/api'
 import { useAuth } from '../hooks/useAuth'
@@ -229,16 +229,6 @@ export default function SongCard({ song, onFeedbackSubmitted }: SongCardProps) {
                 <ThumbsDown className="w-5 h-5" />
               </button>
             </>
-          )}
-
-          {/* Add to playlist */}
-          {song.video_id && (
-            <button
-              className="p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors"
-              title={t('songCard.addToPlaylist')}
-            >
-              <Plus className="w-5 h-5" />
-            </button>
           )}
         </div>
       </div>
