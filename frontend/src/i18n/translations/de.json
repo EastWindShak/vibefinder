@@ -160,7 +160,6 @@
     "errorOccurred": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
     "errorGuestSession": "Fehler beim Erstellen der Gastsitzung",
     "continueAsGuest": "Als Gast fortfahren",
-    "rememberMe": "Angemeldet bleiben",
     "guestDisclaimer": "Gäste können alle Funktionen nutzen, aber ihre Präferenzen werden nicht dauerhaft gespeichert."
   },
   "profile": {

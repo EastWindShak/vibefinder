@@ -169,7 +169,6 @@
     "errorOccurred": "An error occurred. Please try again.",
     "errorGuestSession": "Error creating guest session",
     "continueAsGuest": "Continue as Guest",
-    "rememberMe": "Keep me signed in",
     "guestDisclaimer": "Guests can use all features, but their preferences are not permanently saved."
   },
   "profile": {

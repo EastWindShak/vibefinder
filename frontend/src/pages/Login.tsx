@@ -20,7 +20,6 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -37,14 +36,14 @@ export default function Login() {
 
     try {
       if (mode === 'login') {
-        await login(email, password, rememberMe)
+        await login(email, password)
       } else {
         if (!displayName.trim()) {
           setError(t('auth.pleaseEnterName'))
           setIsLoading(false)
           return
         }
-        await register(email, password, displayName, rememberMe)
+        await register(email, password, displayName)
       }
       navigate('/')
     } catch (err: any) {
@@ -175,23 +174,6 @@ export default function Login() {
                   required
                 />
               </div>
-            </div>
-
-            {/* Remember me checkbox */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500 cursor-pointer"
-              />
-              <label 
-                htmlFor="rememberMe" 
-                className="text-sm text-neutral-600 cursor-pointer select-none"
-              >
-                {t('auth.rememberMe')}
-              </label>
             </div>
 
             <button

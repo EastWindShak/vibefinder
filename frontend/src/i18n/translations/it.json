@@ -160,7 +160,6 @@
     "errorOccurred": "Si è verificato un errore. Per favore riprova.",
     "errorGuestSession": "Errore nella creazione della sessione ospite",
     "continueAsGuest": "Continua come Ospite",
-    "rememberMe": "Mantieni l'accesso",
     "guestDisclaimer": "Gli ospiti possono usare tutte le funzionalità, ma le loro preferenze non vengono salvate permanentemente."
   },
   "profile": {

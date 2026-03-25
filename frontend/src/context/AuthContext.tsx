@@ -19,9 +19,6 @@ const storage = {
     localStorage.removeItem(key)
     sessionStorage.removeItem(key)
   },
-  isPersistent: (key: string): boolean => {
-    return localStorage.getItem(key) !== null
-  }
 }
 
 interface AuthContextType {
@@ -29,8 +26,8 @@ interface AuthContextType {
   isAuthenticated: boolean
   isGuest: boolean
   isLoading: boolean
-  login: (email: string, password: string, rememberMe?: boolean) => Promise<void>
-  register: (email: string, password: string, displayName: string, rememberMe?: boolean) => Promise<void>
+  login: (email: string, password: string) => Promise<void>
+  register: (email: string, password: string, displayName: string) => Promise<void>
   loginAsGuest: () => Promise<void>
   logout: () => void
 }
@@ -70,12 +67,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth()
   }, [])
 
-  const login = async (email: string, password: string, rememberMe: boolean = false) => {
+  const login = async (email: string, password: string) => {
     const tokens = await authApi.login(email, password)
-    
-    storage.set('access_token', tokens.access_token, rememberMe)
+
+    storage.set('access_token', tokens.access_token, false)
     if (tokens.refresh_token) {
-      storage.set('refresh_token', tokens.refresh_token, rememberMe)
+      storage.set('refresh_token', tokens.refresh_token, false)
     }
     
     const userData = await authApi.getCurrentUser()
@@ -83,11 +80,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsGuest(false)
   }
 
-  const register = async (email: string, password: string, displayName: string, rememberMe: boolean = false) => {
+  const register = async (email: string, password: string, displayName: string) => {
     const tokens = await authApi.register(email, password, displayName)
-    storage.set('access_token', tokens.access_token, rememberMe)
+    storage.set('access_token', tokens.access_token, false)
     if (tokens.refresh_token) {
-      storage.set('refresh_token', tokens.refresh_token, rememberMe)
+      storage.set('refresh_token', tokens.refresh_token, false)
     }
     
     const userData = await authApi.getCurrentUser()

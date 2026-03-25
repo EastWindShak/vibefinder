@@ -169,7 +169,6 @@
     "errorOccurred": "Ha ocurrido un error. Por favor intenta de nuevo.",
     "errorGuestSession": "Error al crear sesión de invitado",
     "continueAsGuest": "Continuar como Invitado",
-    "rememberMe": "Mantener sesión iniciada",
     "guestDisclaimer": "Los invitados pueden usar todas las funciones, pero sus preferencias no se guardan permanentemente."
   },
   "profile": {

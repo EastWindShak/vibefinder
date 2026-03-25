@@ -160,7 +160,6 @@
     "errorOccurred": "Une erreur s'est produite. Veuillez réessayer.",
     "errorGuestSession": "Erreur lors de la création de la session invité",
     "continueAsGuest": "Continuer en tant qu'invité",
-    "rememberMe": "Rester connecté",
     "guestDisclaimer": "Les invités peuvent utiliser toutes les fonctionnalités, mais leurs préférences ne sont pas sauvegardées de façon permanente."
   },
   "profile": {
